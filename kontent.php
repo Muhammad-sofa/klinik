@@ -123,7 +123,12 @@
 							<a data-toggle="modal" href="#lapRm" class="thumbnail">
 								<img src="img/lap_5.png" alt="">
 							</a>
-						</li>
+				</li>
+				<li class="span3">
+							<a href="laporan.php" class="thumbnail">
+								<img src="img/lap_7.png" alt="">
+							</a>
+				</li>
                 </ul>
                 
                 <!--<ul class="thumbnails">
@@ -479,103 +484,5 @@
 		header("location:index.php");
 	}
 ?>
-
-<div class="container">
-	<div class="row">
-		<h2 align="center">Laporan Sistem Informasi Klinik<br/>PT. Inova Medika Solusindo</h2>
-    <?php 
-        include "config/koneksi.php";
-    ?>
-    <div style="width: 800px;margin: 0px auto;">
-        <canvas id="myChart"></canvas>
-    </div><br/><br/>
-    <table border="1" cellpadding="4">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>ID Pegawai</th>
-                <th>NIP</th>
-			 <th>Kelas Jabatan</th>
-			 <th>Nama Pegawai</th>
-			 <th>Unit</th>
-			 <th>Jenis Kelamin</th>
-			 <th>Alamat</th>
-			 <th>Status Keluarga</th>
-			 <th>Tanggal Lahir</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php 
-                $no =0;
-                $data = mysql_query("select * from pegawai");
-                while($d=mysql_fetch_array($data)){
-                $no++
-            ?>
-            <tr>
-                <td><?php echo $no; ?></td>
-                <td><?php echo $d['id_pegawai']; ?></td>
-                <td><?php echo $d['nip']; ?></td>
-			 <td><?php echo $d['kj'];?></td>
-			 <td><?php echo $d['nama_pegawai'];?></td>
-			 <td><?php echo $d['unit'];?></td>
-			 <td><?php echo $d['jk'];?></td>
-			 <td><?php echo $d['alamat'];?></td>
-			 <td><?php echo $d['status_kel'];?></td>
-			 <td><?php echo $d['tgl_lhr']?></td>
-            </tr>
-            <?php 
-                }
-            ?>
-        </tbody>
-    </table>
-    <script>
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Manajer Direktur", "Sekretaris"],
-                datasets: [{
-                    label: '',
-                    data: [
-                    <?php 
-                    $unit = mysql_query("select * from pegawai where unit='Manajer Direktur'");
-                    echo mysql_num_rows($unit);
-                    ?>, 
-                    <?php 
-                    $unit = mysql_query("select * from pegawai where unit='Sekretaris'");
-                    echo mysql_num_rows($unit);
-                    ?>
-                    ],
-                    backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                    ],
-                    borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                }
-            }
-        });
-    </script>
-
-<br>
-	</div>
-</div>
-
 
 	

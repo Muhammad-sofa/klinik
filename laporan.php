@@ -1,22 +1,5 @@
-<?php
-session_start();
-if(empty($_SESSION['iduser'])){
-	echo "
-		<script type='text/javascript'>
-			alert('Mohon maaf, Silahkan Login Terlebih Dahulu.');
-			window.location.href='index.php';
-		</script>
-	";
-}
-elseif(isset($_SESSION['iduser']) AND isset($_SESSION['akses'])){
-include ("config/koneksi.php");
-include ("config/akses.php");
-include ("config/class_paging.php");
-include("config/fungsi_indotgl.php");
-include("config/fungsi_rupiah.php");
-$akses=$_SESSION['akses'];
-error_reporting(E_ALL^(E_NOTICE));
-?>
+<script type="text/javascript" src="chartjs/Chart.js"></script>
+
 <!DOCTYPE html>
 <html lang="id">
 	<head>
@@ -51,7 +34,7 @@ error_reporting(E_ALL^(E_NOTICE));
                                 <li><a href="media.php?module=rekam_medik"><i class="fa fa-medkit"></i> Sistem Informasi Klinik</a></li>
 
 							<?php
-                                if($akses=='3'){
+                                {
                             ?>
                             <li><a href="media.php?module=data_user"><i class="fa fa-users"></i> Data User</a></li>
                                 <?php
@@ -94,9 +77,7 @@ error_reporting(E_ALL^(E_NOTICE));
 					  </div><!-- /navbar-inner -->
 					</div><!-- /navbar -->
 	</header>
-	<?php
-		include ("kontent.php");
-	?>
+	
 
 	
 			
@@ -108,9 +89,100 @@ error_reporting(E_ALL^(E_NOTICE));
 		</script>
 	</body>
 </html>
-<?php
-}
-else{
-    
-}
-?>
+
+<div class="container">
+	<div class="row">
+		<h2 align="center">Laporan Sistem Informasi Klinik<br/>PT. Inova Medika Solusindo</h2>
+    <?php 
+        include "config/koneksi.php";
+    ?>
+    <div style="width: 800px;margin: 0px auto;">
+        <canvas id="myChart"></canvas>
+    </div><br/><br/>
+    <table border="1" cellpadding="4">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>ID Pegawai</th>
+                <th>NIP</th>
+			 <th>Kelas Jabatan</th>
+			 <th>Nama Pegawai</th>
+			 <th>Unit</th>
+			 <th>Jenis Kelamin</th>
+			 <th>Alamat</th>
+			 <th>Status Keluarga</th>
+			 <th>Tanggal Lahir</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+                $no =0;
+                $data = mysql_query("select * from pegawai");
+                while($d=mysql_fetch_array($data)){
+                $no++
+            ?>
+            <tr>
+                <td><?php echo $no; ?></td>
+                <td><?php echo $d['id_pegawai']; ?></td>
+                <td><?php echo $d['nip']; ?></td>
+			 <td><?php echo $d['kj'];?></td>
+			 <td><?php echo $d['nama_pegawai'];?></td>
+			 <td><?php echo $d['unit'];?></td>
+			 <td><?php echo $d['jk'];?></td>
+			 <td><?php echo $d['alamat'];?></td>
+			 <td><?php echo $d['status_kel'];?></td>
+			 <td><?php echo $d['tgl_lhr']?></td>
+            </tr>
+            <?php 
+                }
+            ?>
+        </tbody>
+    </table>
+    <script>
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Sidoarjo", "Surabaya", "Jakarta", "Bandung"],
+                datasets: [{
+                    label: '',
+                    data: [
+                    <?php 
+                    $unit = mysql_query("select * from pegawai where alamat='Sidoarjo'");
+                    echo mysql_num_rows($unit);
+                    ?>, 
+                    <?php 
+                    $unit = mysql_query("select * from pegawai where alamat='Surabaya'");
+                    echo mysql_num_rows($unit);
+                    ?>
+                    ],
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+
+<br>
+	</div>
+</div>
