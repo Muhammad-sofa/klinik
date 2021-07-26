@@ -33,7 +33,7 @@ switch($_GET['act']){
 	</script>
 	<?php
 	$p      = new Paging;
-    $batas  = 10;
+    $batas  = 10;      	
     $posisi = $p->cariPosisi($batas);
 ?>
 	<section>
@@ -182,7 +182,7 @@ $nounik=$acak1."-".$acak2;
 			<li><a href="media.php?module=data_pasien">Data Pasien</a> <span class="divider"><b>&gt;</b></span></li>
 			<li class="active">Tambah Pasien</li>
 		</ul>
-		
+
 		<div class="row-fluid">
 			<div class="span12 pull-left">
 				<form method="post" enctype="multipart/form-data" action="<?php echo "$aksi?module=tambah_pasien"; ?>">

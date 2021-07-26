@@ -754,7 +754,7 @@ switch($_GET['act']){
 										<option disabled selected>Pilih Dokter</option>
 										<?php
 										$querdok=mysql_query("SELECT * FROM dokter");
-										while($rdok=mysql_fetch_array($querdok)){
+										while($rdok=mysql_fetch_array($querdok)){	
 										?>
 										<option value="<?php echo $rdok['kodeDokter']; ?>"><?php echo $rdok['nama_dokter']; ?></option>
 										<?php
